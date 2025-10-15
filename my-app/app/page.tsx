@@ -636,9 +636,10 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       {/* Scroll Progress Indicator */}
       <div className="fixed top-0 left-0 w-full h-1 bg-gray-200 z-50">
-        <div className="h-full bg-gradient-to-r from-green-500 to-blue-500 transition-all duration-300 ease-out" 
-             style={{ width: '0%' }} 
-             id="scroll-progress"></div>
+        <div
+          className="h-full bg-gradient-to-r from-green-500 to-blue-500 transition-all duration-300 ease-out"
+          style={{ width: "0%" }}
+          id="scroll-progress"></div>
       </div>
       {/* Navigation */}
       <nav ref={navRef} className="bg-white shadow-sm">
@@ -764,7 +765,7 @@ export default function Home() {
           <div
             className="absolute top-3/4 left-1/4 w-3 h-3 bg-yellow-400 rounded-full opacity-45 animate-float-down"
             style={{ animationDelay: "2.1s" }}></div>
-        </div> 
+        </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10">
           <div ref={heroContentRef} className="space-y-8">
@@ -1039,8 +1040,8 @@ export default function Home() {
               The Natural Advantage
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              We're committed to providing the highest quality natural products
-              while maintaining our farming traditions.
+              We&apos;re committed to providing the highest quality natural
+              products while maintaining our farming traditions.
             </p>
           </div>
 
@@ -1077,7 +1078,7 @@ export default function Home() {
                 Nutritious & Healthy
               </h3>
               <p className="text-sm text-gray-600">
-                Rich in essential nutrients for your family's health
+                Rich in essential nutrients for your family&apos;s health
               </p>
             </div>
 
@@ -1108,7 +1109,7 @@ export default function Home() {
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               We work closely with local farmers to ensure sustainable farming
-              practices. By choosing our products, you're supporting
+              practices. By choosing our products, you&apos;re supporting
               community-friendly initiatives and helping rural economies thrive.
             </p>
           </div>
@@ -1171,8 +1172,8 @@ export default function Home() {
               What Our Customers Say
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Don't just take our word for it. Hear what our happy customers
-              have to say about our products.
+              Don&apos;t just take our word for it. Hear what our happy
+              customers have to say about our products.
             </p>
           </div>
 
@@ -1190,10 +1191,11 @@ export default function Home() {
                   />
                 ))}
               </div>
-              <div className="text-4xl text-gray-300 mb-4">"</div>
+              <div className="text-4xl text-gray-300 mb-4"></div>
               <p className="text-gray-600 mb-4">
-                "The quality of milk is exceptional and the delivery service is
-                always on time. My family loves the fresh taste every morning."
+                &apos;The quality of milk is exceptional and the delivery
+                service is always on time. My family loves the fresh taste every
+                morning.&apos;
               </p>
               <div className="flex items-center justify-center">
                 <Check className="h-4 w-4 text-green-600 mr-2" />
@@ -1216,10 +1218,11 @@ export default function Home() {
                   />
                 ))}
               </div>
-              <div className="text-4xl text-gray-300 mb-4">"</div>
+              <div className="text-4xl text-gray-300 mb-4"></div>
               <p className="text-gray-600 mb-4">
-                "SathyaDairy has transformed how we get our dairy products. The
-                organic cheese is absolutely delicious and worth every penny."
+                &apos;SathyaDairy has transformed how we get our dairy products.
+                The organic cheese is absolutely delicious and worth every
+                penny.&apos;
               </p>
               <div className="flex items-center justify-center">
                 <Check className="h-4 w-4 text-green-600 mr-2" />
@@ -1242,11 +1245,11 @@ export default function Home() {
                   />
                 ))}
               </div>
-              <div className="text-4xl text-gray-300 mb-4">"</div>
+              <div className="text-4xl text-gray-300 mb-4">&apos;</div>
               <p className="text-gray-600 mb-4">
-                "I love supporting sustainable farming practices. The milk is
-                fresh, pure, and knowing it's ethically sourced makes it even
-                better."
+                &apos;I love supporting sustainable farming practices. The milk
+                is fresh, pure, and knowing it&apos;s ethically sourced makes it
+                even better.&apos;
               </p>
               <div className="flex items-center justify-center">
                 <Check className="h-4 w-4 text-green-600 mr-2" />
