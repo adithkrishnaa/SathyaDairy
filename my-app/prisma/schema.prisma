@@ -1,0 +1,188 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserType {
+  CUSTOMER
+  OWNER
+  DELIVERY_PERSON
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+enum DeliveryStatus {
+  SCHEDULED
+  IN_TRANSIT
+  DELIVERED
+  FAILED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  CASH
+  ONLINE
+  UPI
+  CARD
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  password      String?
+  name          String
+  phone         String?  @unique
+  address       String?
+  location      String?  // Customer location
+  landmark      String?  // Customer landmark
+  userType      UserType
+  isVerified    Boolean  @default(false)
+  otp           String?
+  otpExpiresAt  DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  orders        Order[]
+  deliveries    Delivery[]
+  products      Product[] // For owners
+  milkSubscriptions MilkSubscription[]
+  bills         Bill[]
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  image       String?
+  category    String
+  isActive    Boolean  @default(true)
+  stock       Float    @default(0) // Stock quantity in liters
+  ownerId     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  owner       User     @relation(fields: [ownerId], references: [id])
+  orderItems  OrderItem[]
+  milkSubscriptions MilkSubscription[]
+  billItems   BillItem[]
+}
+
+model Order {
+  id            String      @id @default(cuid())
+  customerId    String
+  status        OrderStatus @default(PENDING)
+  totalAmount   Float
+  deliveryDate  DateTime
+  isRecurring   Boolean     @default(false)
+  recurringType String?     // "weekly", "monthly"
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  // Relations
+  customer      User        @relation(fields: [customerId], references: [id])
+  items         OrderItem[]
+  deliveries    Delivery[]
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Float
+
+  // Relations
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Delivery {
+  id            String          @id @default(cuid())
+  orderId       String
+  deliveryPersonId String
+  status        DeliveryStatus  @default(SCHEDULED)
+  scheduledDate DateTime
+  deliveredAt   DateTime?
+  notes         String?
+  cashReceived  Float?          // Amount received in cash
+  paymentMethod PaymentMethod?  // How customer paid
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  // Relations
+  order         Order           @relation(fields: [orderId], references: [id])
+  deliveryPerson User           @relation(fields: [deliveryPersonId], references: [id])
+}
+
+model MilkSubscription {
+  id            String   @id @default(cuid())
+  customerId    String
+  productId     String
+  quantity      Float    // Daily quantity in liters
+  isActive      Boolean  @default(true)
+  startDate     DateTime
+  endDate       DateTime?
+  leaveDates    String[] // Array of dates when customer is on leave
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  customer      User     @relation(fields: [customerId], references: [id])
+  product       Product  @relation(fields: [productId], references: [id])
+}
+
+model Bill {
+  id            String        @id @default(cuid())
+  customerId    String
+  month         Int           // 1-12
+  year          Int
+  totalAmount   Float
+  status        PaymentStatus @default(PENDING)
+  dueDate       DateTime
+  paidAt        DateTime?
+  paymentMethod PaymentMethod?
+  paymentLink   String?       // Payment gateway link
+  whatsappSent  Boolean       @default(false)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  // Relations
+  customer      User          @relation(fields: [customerId], references: [id])
+  billItems     BillItem[]
+}
+
+model BillItem {
+  id        String  @id @default(cuid())
+  billId    String
+  productId String
+  quantity  Float
+  price     Float
+  total     Float
+
+  // Relations
+  bill      Bill    @relation(fields: [billId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+}
